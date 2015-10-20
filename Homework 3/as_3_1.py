@@ -16,8 +16,8 @@ clf = tree.DecisionTreeClassifier(criterion="gini", min_samples_split=1)
 clf.fit(attributes, wineClass)
 good = 0
 bad = 0
-for sample in enumerate(attributes):
-    if clf.predict(attributes[sample[0]]) == wineClass[sample[0]]:
+for i, sample in enumerate(attributes):
+    if clf.predict(sample) == wineClass[i]:
         good += 1
     else:
         bad += 1
