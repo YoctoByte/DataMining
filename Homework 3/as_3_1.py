@@ -1,5 +1,6 @@
 from scipy.io import loadmat
 from sklearn import tree
+from sklearn.externals.six import StringIO
 
 filename = 'Data/wine.mat'
 data = loadmat(filename)
@@ -12,7 +13,7 @@ for index in range(len(data['classNames'])):
 for index in range(len(data['attributeNames'][0])):
     attributeNames.append(data['attributeNames'][0][index][0])
 
-clf = tree.DecisionTreeClassifier(criterion="gini", min_samples_split=1)
+clf = tree.DecisionTreeClassifier(criterion="gini", min_samples_split=100)
 clf.fit(attributes, wineClass)
 good = 0
 bad = 0
@@ -22,3 +23,6 @@ for i, sample in enumerate(attributes):
     else:
         bad += 1
 print(good, bad)
+
+with open("iris.dot", 'w') as f:
+    f = tree.export_graphviz(clf, out_file=f)
