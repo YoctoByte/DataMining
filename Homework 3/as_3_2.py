@@ -33,11 +33,13 @@ for depth in range(2, 21):
 # plt.show()
 
 # 3.2.2
+kf = cross_validation.KFold(len(data['X']), n_folds=100)
 averageError = []
 for depth in range(2, 21):
     error = []
-    for i in range(100):
-        X_train, X_test, y_train, y_test = cross_validation.train_test_split(data['X'], data['y'])
+    for train_index, test_index in kf:
+        X_train, X_test = data['X'][train_index], data['X'][test_index]
+        y_train, y_test = data['y'][train_index], data['y'][test_index]
         clf = tree.DecisionTreeClassifier(criterion="gini", min_samples_split=100, max_depth=depth)
         clf.fit(X_train, y_train)
         good = 0
