@@ -40,7 +40,7 @@ plt.show()
 
 
 # 3.2.2
-kf = cross_validation.KFold(len(data['X']), n_folds=100)
+kf = cross_validation.KFold(len(data['X']), n_folds=10)
 averageError = []
 for depth in range(2, 21):
     error = []
@@ -49,14 +49,14 @@ for depth in range(2, 21):
         y_train, y_test = data['y'][train_index], data['y'][test_index]
         clf = tree.DecisionTreeClassifier(criterion="gini", min_samples_split=100, max_depth=depth)
         clf.fit(X_train, y_train)
-        good = 0
-        bad = 0
+        good = 0.0
+        bad = 0.0
         for i, sample in enumerate(X_test):
             if clf.predict(sample) == y_test[i]:
-                good += 1
+                good += 1.0
             else:
-                bad += 1
-        error.append(good/(good+bad)*100)
+                bad += 1.0
+        error.append(good/(good+bad)*100.0)
     averageError.append(sum(error)/len(error))
 
 fig = plt.figure()
@@ -64,5 +64,5 @@ fig.suptitle('3.2.2')
 plt.xlabel('max_depth')
 plt.ylabel('average percentage right')
 plt.plot(range(2, 21), averageError)
-fig.savefig('output/test.jpg')
+# fig.savefig('output/test.jpg')
 plt.show()
