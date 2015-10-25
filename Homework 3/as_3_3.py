@@ -3,6 +3,7 @@ import sklearn.metrics
 import xlrd
 import numpy as np
 import pylab
+import pylab as plt
 def load_data():
     wb = xlrd.open_workbook('Data/classprobs.xls')
     datasheet = wb.sheet_by_index(0)
@@ -40,9 +41,14 @@ def auc(data,sample):
     return (1./(m*n)) *t
 
 
-def plotROC(data, clasifier):
+def plotROC(data, clasifier, title):
     fpr, tpr, treshold = sklearn.metrics.roc_curve(np.array(data.T[0])[0], np.array(data.T[clasifier])[0])
+    fig = plt.figure()
+    fig.suptitle(title)
+    plt.xlabel('False positive Rate')
+    plt.ylabel('True positive Rate')
     pylab.plot(fpr, tpr)
+    fig.savefig('output/'+title.replace(' ', '_').replace('/', '-')+'.jpg')
     pylab.show()
 
 
@@ -80,15 +86,15 @@ def compute_accuricy(real_data, clasifierdata):
 
 data = load_data()
 print (np.array(data.T[0])[0])
-plotROC(data, 0)
-plotROC(data, 1)
-plotROC(data, 1)
+plotROC(data, 0, 'Always correct classifier')
+plotROC(data, 1, 'Classifier 1')
+plotROC(data, 1, 'Classifier 2')
 print(auc(data, 0))
 print(auc(data, 1))
 print(auc(data, 2))
-predicted0 = predict(np.array(data.T[0])[0],0.5)
-predicted1 = predict(np.array(data.T[1])[0],0.5)
-predicted2 = predict(np.array(data.T[2])[0],0.5)
-print(compute_accuricy(np.array(data.T[0])[0],predicted0))
-print(compute_accuricy(np.array(data.T[0])[0],predicted1))
-print(compute_accuricy(np.array(data.T[0])[0],predicted2))
+predicted0 = predict(np.array(data.T[0])[0], 0.5)
+predicted1 = predict(np.array(data.T[1])[0], 0.5)
+predicted2 = predict(np.array(data.T[2])[0], 0.5)
+print(compute_accuricy(np.array(data.T[0])[0], predicted0))
+print(compute_accuricy(np.array(data.T[0])[0], predicted1))
+print(compute_accuricy(np.array(data.T[0])[0], predicted2))
