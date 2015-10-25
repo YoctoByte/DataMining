@@ -60,9 +60,9 @@ for depth in range(2, 21):
     averageError.append(sum(error)/len(error))
 
 fig = plt.figure()
-fig.suptitle('test title')
-plt.xlabel('xlabel')
-plt.ylabel('ylabel')
+fig.suptitle('3.2.2')
+plt.xlabel('max_depth')
+plt.ylabel('average percentage right')
 plt.plot(range(2, 21), averageError)
 fig.savefig('output/test.jpg')
 plt.show()
