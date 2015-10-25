@@ -1,3 +1,4 @@
+from __future__ import print_function
 from scipy.io import loadmat
 from sklearn import tree
 from sklearn import cross_validation
@@ -29,8 +30,14 @@ for depth in range(2, 21):
             bad += 1
     error.append(good/(good+bad)*100)
 
-# plt.scatter(range(2, 21), error)
-# plt.show()
+fig = plt.figure()
+fig.suptitle('test title')
+plt.xlabel('xlabel')
+plt.ylabel('ylabel')
+plt.plot(range(2, 21), error)
+fig.savefig('output/test.jpg')
+plt.show()
+
 
 # 3.2.2
 kf = cross_validation.KFold(len(data['X']), n_folds=100)
@@ -51,5 +58,11 @@ for depth in range(2, 21):
                 bad += 1
         error.append(good/(good+bad)*100)
     averageError.append(sum(error)/len(error))
-plt.scatter(range(2, 21), averageError)
+
+fig = plt.figure()
+fig.suptitle('test title')
+plt.xlabel('xlabel')
+plt.ylabel('ylabel')
+plt.plot(range(2, 21), averageError)
+fig.savefig('output/test.jpg')
 plt.show()
