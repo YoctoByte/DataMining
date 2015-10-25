@@ -31,9 +31,9 @@ for depth in range(2, 21):
     error.append(good/(good+bad)*100.0)
 
 fig = plt.figure()
-fig.suptitle('test title')
-plt.xlabel('xlabel')
-plt.ylabel('ylabel')
+fig.suptitle('3.2.1')
+plt.xlabel('max_depth')
+plt.ylabel('percentage right')
 plt.plot(range(2, 21), error)
 # fig.savefig('output/test.jpg')
 plt.show()
