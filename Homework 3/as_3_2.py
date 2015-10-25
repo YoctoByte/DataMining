@@ -21,21 +21,21 @@ error = []
 for depth in range(2, 21):
     clf = tree.DecisionTreeClassifier(criterion="gini", min_samples_split=100, max_depth=depth)
     clf.fit(X_train, y_train)
-    good = 0
-    bad = 0
+    good = 0.0
+    bad = 0.0
     for i, sample in enumerate(X_test):
         if clf.predict(sample) == y_test[i]:
-            good += 1
+            good += 1.0
         else:
-            bad += 1
-    error.append(good/(good+bad)*100)
+            bad += 1.0
+    error.append(good/(good+bad)*100.0)
 
 fig = plt.figure()
 fig.suptitle('test title')
 plt.xlabel('xlabel')
 plt.ylabel('ylabel')
 plt.plot(range(2, 21), error)
-fig.savefig('output/test.jpg')
+# fig.savefig('output/test.jpg')
 plt.show()
 
 
