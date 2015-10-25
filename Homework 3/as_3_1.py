@@ -34,6 +34,6 @@ for i, sample in enumerate(attributes):
         good += 1.0
     else:
         bad += 1.0
-print("Right predictions:", good)
-print("Wrong predictions:", bad)
+print("Right predictions:", int(good))
+print("Wrong predictions:", int(bad))
 print("Percentage right:", good/(good+bad)*100.0, "%")
