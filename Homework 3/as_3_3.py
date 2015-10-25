@@ -4,7 +4,7 @@ import xlrd
 import numpy as np
 import pylab
 import pylab as plt
-
+import random
 
 def load_data():
     wb = xlrd.open_workbook('Data/classprobs.xls')
@@ -14,6 +14,7 @@ def load_data():
         l2 = []
         for icol in range(data_sheet.ncols):
             l2.append(data_sheet.cell(irow, icol).value)
+        l2.append(float(random.randint(0, 100))/100)
         l1.append(l2)
     data = np.matrix(l1)
     return data
@@ -55,6 +56,10 @@ def plotROC(data, classifier, title):
     pylab.show()
 
 
+def true_auc(data, classifier):
+    return sklearn.metrics.roc_auc_score(np.array(data.T[0])[0], np.array(data.T[classifier])[0])
+
+
 def predict(classifier_data, threshold):
     return_val = []
     for point in classifier_data:
@@ -88,15 +93,24 @@ def compute_accuracy(real_data, classifier_data):
 
 
 data = load_data()
+print(data)
 plotROC(data, 0, 'Always correct classifier')
 plotROC(data, 1, 'Classifier 1')
-plotROC(data, 1, 'Classifier 2')
+plotROC(data, 2, 'Classifier 2')
+plotROC(data, 3, 'Random Classifier')
 print('AUC Always Correct classifier = ', auc(data, 0))
 print('AUC Classifier 1 = ', auc(data, 1))
 print('AUC Classifier 2 = ', auc(data, 2))
+print('AUC Random = ', auc(data, 3))
+print('trueAUC Always Correct classifier = ', true_auc(data, 0))
+print('trueAUC Classifier 1 = ', true_auc(data, 1))
+print('trueAUC Classifier 2 = ', true_auc(data, 2))
+print('trueAUC Random = ', true_auc(data, 3))
 predicted0 = predict(np.array(data.T[0])[0], 0.5)
 predicted1 = predict(np.array(data.T[1])[0], 0.5)
 predicted2 = predict(np.array(data.T[2])[0], 0.5)
+predicted3 = predict(np.array(data.T[3])[0], 0.5)
 print('Accuracy Always Correct classifier = ', compute_accuracy(np.array(data.T[0])[0], predicted0))
 print('Accuracy Classifier 1 = ', compute_accuracy(np.array(data.T[0])[0], predicted1))
 print('Accuracy Classifier 2 = ', compute_accuracy(np.array(data.T[0])[0], predicted2))
+print('Accuracy Random = ', compute_accuracy(np.array(data.T[0])[0], predicted3))

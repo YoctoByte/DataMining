@@ -40,7 +40,7 @@ plt.show()
 
 
 # 3.2.2
-kf = cross_validation.KFold(len(data['X']), n_folds=10)
+kf = cross_validation.KFold(len(data['X']), n_folds=100)
 averageError = []
 for depth in range(2, 21):
     error = []
